@@ -4,7 +4,11 @@ import { User } from "../../views/User";
 
 const UserPage: NextPage = () => {
   const { query } = useRouter();
-  return <User userId={query.id as string} />;
+  return (
+    <>
+      <User userId={query.id as string} />
+    </>
+  );
 };
 
 export default UserPage;

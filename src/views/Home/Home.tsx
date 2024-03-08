@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Footer, Logo, Protected } from "../../Components";
 
 const navigation = [
-  { name: "About", href: "#" },
+  { name: "About", href: "/about" },
   { name: "Contact", href: "#" },
   { name: "FAQ", href: "#" },
 ];
@@ -90,10 +90,8 @@ export const Home = () => {
                 <a
                   onClick={() =>
                     sessionData
-                      ? signOut()
-                      : signIn("google", {
-                          callbackUrl: `${window.location.origin}/dashboard`,
-                        })
+                      ? signOut({ callbackUrl: `${window.location.origin}/` })
+                      : push("/signin")
                   }
                   className="inline-block cursor-pointer rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
                 >
@@ -128,7 +126,7 @@ export const Home = () => {
                         <Link
                           key={item.name}
                           href={item.href}
-                          className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
+                          className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                         >
                           {item.name}
                         </Link>
@@ -137,13 +135,9 @@ export const Home = () => {
                     <div className="py-6">
                       <a
                         onClick={() =>
-                          sessionData
-                            ? signOut()
-                            : signIn("google", {
-                                callbackUrl: `${window.location.origin}/dashboard`,
-                              })
+                          sessionData ? signOut() : push("/signin")
                         }
-                        className="-mx-3 block cursor-pointer rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
+                        className="-mx-3 block cursor-pointer rounded-lg px-3 py-2.5 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
                       >
                         {sessionData ? "Sign out" : "Sign in"}
                       </a>
@@ -156,7 +150,7 @@ export const Home = () => {
         </div>
         <main>
           <div className="relative px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
+            <div className="mx-auto max-w-3xl pb-32 pt-20 sm:pb-40 sm:pt-48">
               <div>
                 {/* <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                   <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
@@ -172,7 +166,7 @@ export const Home = () => {
                 <Protected>
                   {({ session }) => (
                     <div className="mb-4 flex justify-center">
-                      <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                      <div className="relative overflow-hidden rounded-full px-4 py-1.5 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                         <span className="text-gray-600">
                           Signed in as{" "}
                           <Link
@@ -196,11 +190,7 @@ export const Home = () => {
                   <div className="mt-8 flex gap-x-4 sm:justify-center">
                     <a
                       onClick={() =>
-                        sessionData
-                          ? push("/dashboard")
-                          : signIn("google", {
-                              callbackUrl: `${window.location.origin}/dashboard`,
-                            })
+                        sessionData ? push("/dashboard") : push("/signin")
                       }
                       className="inline-block cursor-pointer rounded-lg bg-pink-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-pink-600 hover:bg-pink-700 hover:ring-pink-700"
                     >

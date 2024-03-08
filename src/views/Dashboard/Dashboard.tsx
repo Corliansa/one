@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { Base, Card, Protected } from "../../Components";
 import { capitalize } from "../../utils/capitalize";
 import { trpc } from "../../utils/trpc";
@@ -23,12 +22,8 @@ export const Dashboard: NextPage = () => {
       </Head>
       <Base title="Dashboard">
         <Protected verification="UNVERIFIED">
-          <Card className="mt-4 p-2">
-            You are unverified,{" "}
-            <Link href="/admins" className="font-semibold text-pink-600">
-              please ask an admin to verify you
-            </Link>
-          </Card>
+          {/* added a warning verification if user is unverified */}
+          
         </Protected>
         <Protected redirectTo="/">
           <Card className="mt-4">

@@ -14,6 +14,9 @@ type CreateContextOptions = {
  * - trpc's `createSSGHelpers` where we don't have req/res
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  **/
+
+
+// function called in every trpc request
 export const createContextInner = async (opts: CreateContextOptions) => {
   return {
     session: opts.session,
